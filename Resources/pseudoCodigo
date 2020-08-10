@@ -1,0 +1,46 @@
+MODO AUTOMÁTICO:
+
+Critério de numero de páginas visitadas
+
+BFS(webPageRoot)
+	Cria uma variavel para contar o número de páginas visitadas
+	Criar uma lista iterável que vai ser retornada no método
+	Criar uma fila para guardar as páginas a visitar
+	
+	Verificar se o numero de páginas pretendidas já foi atingida
+		Se sim -> retornar a lista iterável de resultado
+	
+	Verificar se a webPageRoot não existe já no webCrawler:
+		Se não -> 	Inserir no webCrawler a webPageRoot como Vertex
+			
+	Adicionar a webPageRoot como primeira página a ser visitada
+	Adicionar á lista iterável de resultado
+	Incrementar a variavel das páginas visitadas
+
+	
+	Enquanto a fila não está vazia faça:
+		Retirar da fila de páginas a visitar e guardar a primeira webPage da fila numa variável
+		Fazer print da página visitada
+		
+		Guardar numa fila todos os links incidents a esta webPage visitada
+
+		Iterar sobre a fila obtida:
+			
+			Verificar se o numero de páginas pretendidas já foi atingida:
+				Se sim -> retornar a lista iterável de resultado
+			
+			Inserir um novo vértice com uma nova webPage com o link atual iterado
+			Adicionar esta webPage á lista iterável de resultado
+			Adicionar esta webPage á fila de páginas a visitar
+
+			Fazer print do link incidente
+			
+			Inserir um novo edge com vertice inicial a webPage a ser visitada e como vertice final a novaWebPage incidente
+			
+			Incrementar a variavel das páginas visitadas
+
+	Retornar lista resultado
+
+Critério de profundidade
+
+

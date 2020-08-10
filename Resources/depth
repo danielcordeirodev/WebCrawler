@@ -1,0 +1,77 @@
+public Iterable<WebPage> BFSByDepth(WebPage webPage)
+            throws WebCrawlerException, IOException {
+        
+        // Variables
+        // Contar numero de links incidentes percorridos desde a root , basicamente os niveis percorridos
+        int countLevelOfWebCrawler = 0;
+        
+        List<WebPage> bFSList = new ArrayList<>();
+        Queue<WebPage> webPagesToVisit = new LinkedList<>();
+        Queue<WebPage> incidentWebPages = new LinkedList<>();
+        
+        
+        // FOR LEVEL 0
+        if (this.numStopCriteria <= 0){
+            System.out.println("Web Crawler contém como root no nivel 0: " + webPage.getPersonalURL());
+            // Insert the webPage in the webCrawler
+            webCrawler.insertVertex(webPage);
+            bFSList.add(webPage);
+            return bFSList;
+        }
+        
+        webPagesToVisit.add(webPage);
+        
+        /*List<WebPage> incidentsToVisit = new ArrayList<>(); // This variable will save the incidents of one level
+        incidentsToVisit.add(webPage);*/
+        
+        //WebPage lastWebPageOfALevel = new WebPage(webPage.getPersonalURL());
+        
+        List webPagesOfALevel = new ArrayList();
+        
+        while (!webPagesToVisit.isEmpty()){
+            WebPage visitedWebPage = webPagesToVisit.poll();
+            
+            System.out.println("Link da página root: " + visitedWebPage.getPersonalURL() + "\nIncident WebPages:\n[");
+       
+            if(countLevelOfWebCrawler == this.numStopCriteria){
+                return bFSList;
+            }
+            
+            // Get all incident links for 
+            Queue<Link> allIncidentWebLinks = visitedWebPage.getAllIncidentWebPages(visitedWebPage.getPersonalURL());
+            
+            for(Link link: allIncidentWebLinks){    
+                incidentWebPages.add(new WebPage(link.getLinkName()));
+                webPagesOfALevel.add(new WebPage(link.getLinkName()));
+            }
+            
+            for (WebPage page: incidentWebPages){
+                webPagesToVisit.add(page);
+                webCrawler.insertVertex(incidentWebPages.poll());
+            }
+            
+            // It reachs the last webPage of the level
+            if (webPagesOfALevel.get(webPagesOfALevel.size() - 1) == visitedWebPage){
+                countLevelOfWebCrawler ++;
+                webPagesOfALevel.clear();
+            }
+            
+                /*// Insert a new WebPage in the webCrawler
+                webPageInserting = new WebPage(link.getLinkName());
+                //this.insertWebPage(webPageInserting); PARA QUÊ TER ISTO SE SÓ TEMOS PARA ESTE.... NEM VALE A PENA
+                webCrawler.insertVertex(webPageInserting);
+                webPagesToVisit.add(webPageInserting);
+                System.out.println("Link da página: " + webPageInserting.getPersonalURL());
+                
+                // Insert a new Link between WebPages
+                webCrawler.insertEdge(visitedWebPage, webPageInserting, link);*/
+                
+            
+            
+            System.out.println("]\n");
+            
+            
+        }
+        
+        return null;
+    }
